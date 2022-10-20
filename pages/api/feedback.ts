@@ -32,11 +32,11 @@ export default function handler(
     }
 }
 
-function getFeedbackPath() {
+export function getFeedbackPath() {
     return path.join(process.cwd(), 'data', 'feedback.json')
 }
 
-function getFileData(filepath: string) {
+export function getFileData(filepath: string) {
     const filteData = fs.readFileSync(filepath).toString()
     const data = JSON.parse(filteData)
     return data
