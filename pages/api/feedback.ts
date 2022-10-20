@@ -6,8 +6,10 @@ export default function handler(
     req: NextApiRequest,
     res: NextApiResponse,
 ) {
-    if (req.method !== 'POST') {
-        res.status(200).json({ message: "this is not POST req!" })
+    if (req.method === 'GET') {
+        const feedbackFilePath = getFeedbackPath()
+        const data = getFileData(feedbackFilePath)
+        res.status(200).json({ feedback: data })
         return;
     }
     if (req.method === 'POST') {
@@ -21,12 +23,21 @@ export default function handler(
         }
 
         // store data in /data/feedback.json
-        const feedbackFile = path.join(process.cwd(), 'data', 'feedback.json')
-        const feedbackFileData = fs.readFileSync(feedbackFile).toString()
-        const data = JSON.parse(feedbackFileData)
+        const feedbackFilePath = getFeedbackPath()
+        const data = getFileData(feedbackFilePath)
         data.push(newData)
 
-        fs.writeFileSync(feedbackFile, JSON.stringify(data))
+        fs.writeFileSync(feedbackFilePath, JSON.stringify(data))
         res.status(201).json({ message: "success storing email & feedback", newData })
     }
+}
+
+function getFeedbackPath() {
+    return path.join(process.cwd(), 'data', 'feedback.json')
+}
+
+function getFileData(filepath: string) {
+    const filteData = fs.readFileSync(filepath).toString()
+    const data = JSON.parse(filteData)
+    return data
 }

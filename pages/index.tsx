@@ -1,9 +1,21 @@
 import type { NextPage } from 'next';
-import React, { FormEventHandler, useRef } from 'react';
+import React, {
+  FormEventHandler,
+  MouseEventHandler,
+  useRef,
+  useState,
+} from 'react';
+
+interface Feedback {
+  id: string;
+  email: string;
+  feedback: string;
+}
 
 const Home: NextPage = () => {
   const emailRef = useRef<null | HTMLInputElement>(null);
   const feedbackRef = useRef<null | HTMLTextAreaElement>(null);
+  const [data, setData] = useState<null | Feedback[]>(null);
 
   const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault();
@@ -30,9 +42,15 @@ const Home: NextPage = () => {
       });
   };
 
+  const handleLoadClick: MouseEventHandler = () => {
+    fetch('/api/feedback')
+      .then((response) => response.json())
+      .then((data) => setData(data.feedback));
+  };
+
   return (
     <>
-      <h1>The Home Page</h1>
+      <h2>send feedback</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor='email'>email</label>
@@ -55,6 +73,17 @@ const Home: NextPage = () => {
         </div>
         <button type='submit'>send</button>
       </form>
+      <hr />
+      <h2>get feedback</h2>
+      <button onClick={handleLoadClick}>load all feedback</button>
+      <ul>
+        {data?.map(({ id, email, feedback }) => (
+          <li key={`feedback_${id}`}>
+            <h2>{email}</h2>
+            <p>{feedback}</p>
+          </li>
+        ))}
+      </ul>
     </>
   );
 };
