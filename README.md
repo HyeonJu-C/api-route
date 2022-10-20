@@ -30,3 +30,7 @@ export default function handler(req, res) {
 - [json 파일에 데이터를 추가하는 api]()
 - [json 파일 데이터를 반환하는 api]()
 - [getStaticProps와 api]()
+- dynamic api route
+  - `api/products/[id]`
+  - `api/products/[...slug]`
+  - `req.query` 를 통해 url에 접근할 수 있다.
