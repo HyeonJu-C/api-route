@@ -27,9 +27,9 @@ export default function handler(req, res) {
 
 ---
 
-- [json 파일에 데이터를 추가하는 api]()
-- [json 파일 데이터를 반환하는 api]()
-- [getStaticProps와 api]()
+- [json 파일에 데이터를 추가하는 api](https://github.com/HyeonJu-C/api-route/blob/main/pages/api/feedback.ts)
+- [json 파일 데이터를 반환하는 api](https://github.com/HyeonJu-C/api-route/blob/main/pages/index.tsx)
+- [getStaticProps와 api](https://github.com/HyeonJu-C/api-route/blob/main/pages/feedback.tsx)
 - dynamic api route
   - `api/products/[id]`
   - `api/products/[...slug]`
